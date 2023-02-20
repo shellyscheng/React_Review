@@ -1,8 +1,8 @@
 import { createRoot } from "react-dom/client";
 import { Link, BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
-import AdoptedPetContext from "./AdoptedPetContext";
+import { Provider } from "react-redux"; // stick our store on the context of react
+import store from "./store";
 import SearchParams from "./SearchParams";
 import Details from "./Details";
 
@@ -20,8 +20,8 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <AdoptedPetContext.Provider value={adoptedPet}>
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
           <header>
             <Link to="/">Adopt me!</Link>
           </header>
@@ -29,8 +29,8 @@ const App = () => {
             <Route path="/details/:id" element={<Details />} />
             <Route path="/" element={<SearchParams />} />
           </Routes>
-        </QueryClientProvider>
-      </AdoptedPetContext.Provider>
+        </Provider>
+      </QueryClientProvider>
     </BrowserRouter>
   ); // children, optional
 };
