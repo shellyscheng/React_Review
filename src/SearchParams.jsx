@@ -12,10 +12,10 @@ const SearchParams = () => {
   const [animal, setAnimal] = useState("");
   const [breeds] = useBreedList(animal);
   const dispatch = useDispatch();
-  const requestParams = useSelector((state) => state.searchParams.value);
+  const searchParams = useSelector((state) => state.searchParams.value);
   const adoptedPet = useSelector((state) => state.adoptedPet.value); // subscription to redux, only pull needed data, bc react will re-render if data changes
 
-  const results = useQuery(["search", requestParams], fetchSearch);
+  const results = useQuery(["search", searchParams], fetchSearch);
   const pets = results?.data?.pets ?? [];
 
   return (
