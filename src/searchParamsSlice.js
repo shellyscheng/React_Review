@@ -10,11 +10,12 @@ const searchParamsSlice = createSlice({
     },
   },
   reducers: {
-    all: (state, actions) => {
-      state.value = actions.payload;
+    all: (state, action) => {
+      state.value = action.payload;
     },
   },
 });
 
 export const { all } = searchParamsSlice.actions;
+
 export default searchParamsSlice.reducer;

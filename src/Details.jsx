@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
 import { adopt } from "./adoptedPetSlice";
-import fetchPet from "./fetchPet";
+import { useGetPetQuery } from "./petApiService";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import Modal from "./Modal";
@@ -12,18 +11,16 @@ const Details = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate(); // programmatically reroute someone to somewhere
   const { id } = useParams();
-  const results = useQuery(["details", id], fetchPet);
+  const { isLoading, data: pet } = useGetPetQuery(id);
   const dispatch = useDispatch(); // give back a function which allows users to give actions to core store
 
-  if (results.isLoading) {
+  if (isLoading) {
     return (
       <div className="loading-pane">
         <h2 className="loader">🌀</h2>
       </div>
     );
   }
-
-  const pet = results.data.pets[0];
 
   return (
     <div className="details">

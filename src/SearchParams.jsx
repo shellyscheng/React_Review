@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useSearchQuery } from "./petApiService";
 import { useSelector, useDispatch } from "react-redux";
 import useBreedList from "./useBreedList";
-import fetchSearch from "./fetchSearch";
 import { all } from "./searchParamsSlice";
 import Results from "./Result";
 
@@ -15,8 +14,8 @@ const SearchParams = () => {
   const searchParams = useSelector((state) => state.searchParams.value);
   const adoptedPet = useSelector((state) => state.adoptedPet.value); // subscription to redux, only pull needed data, bc react will re-render if data changes
 
-  const results = useQuery(["search", searchParams], fetchSearch);
-  const pets = results?.data?.pets ?? [];
+  let { data: pets } = useSearchQuery(searchParams);
+  pets = pets ?? [];
 
   return (
     <div className="search-params">
