@@ -5,7 +5,7 @@ export const adoptedPetSlice = createSlice({
   initialState: {
     value: null,
   },
-  reducer: {
+  reducers: {
     adopt: (state, action) => {
       state.value = action.payload;
     },

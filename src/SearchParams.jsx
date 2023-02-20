@@ -1,6 +1,6 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import AdoptedPetContext from "./AdoptedPetContext";
+import { useSelector } from "react-redux";
 import useBreedList from "./useBreedList";
 import fetchSearch from "./fetchSearch";
 import Results from "./Results";
@@ -15,7 +15,7 @@ const SearchParams = () => {
   }); // location and breed are not tracking anymore
   const [animal, setAnimal] = useState("");
   const [breeds] = useBreedList(animal);
-  const [adoptedPet, _] = useContext(AdoptedPetContext);
+  const adoptedPet = useSelector((state) => state.adoptedPet.value); // subscription to redux, only pull needed data, bc react will re-render if data changes
 
   const results = useQuery(["search", requestParams], fetchSearch);
   const pets = results?.data?.pets ?? [];

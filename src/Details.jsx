@@ -1,7 +1,8 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import AdoptedPetContext from "./AdoptedPetContext";
+import { useDispatch } from "react-redux";
+import { adopt } from "./adoptedPetSlice";
 import fetchPet from "./fetchPet";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
@@ -10,11 +11,9 @@ import Modal from "./Modal";
 const Details = () => {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate(); // programmatically reroute someone to somewhere
-
-  // eslint-disable-next-line no-unused-vars
-  const [_, setAdoptedPet] = useContext(AdoptedPetContext); // _ means that I don't care what it is
   const { id } = useParams();
   const results = useQuery(["details", id], fetchPet);
+  const dispatch = useDispatch(); // give back a function which allows users to give actions to core store
 
   if (results.isLoading) {
     return (
@@ -41,7 +40,7 @@ const Details = () => {
               <div className="buttons">
                 <button
                   onClick={() => {
-                    setAdoptedPet(pet);
+                    dispatch(adopt(pet));
                     navigate("/"); // navigate back to home page
                   }}
                 >
