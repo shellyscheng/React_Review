@@ -6,14 +6,20 @@ import fetchPet from "./fetchPet";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import Modal from "./Modal";
+import { PetAPIResponse } from "./APIResponseTypes";
 
 const Details = () => {
+  const { id } = useParams();
+  if (!id) {
+    throw new Error("there's no id!");
+  }
+
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate(); // programmatically reroute someone to somewhere
 
   // eslint-disable-next-line no-unused-vars
   const [_, setAdoptedPet] = useContext(AdoptedPetContext); // _ means that I don't care what it is
-  const { id } = useParams();
+
   const results = useQuery(["details", id], fetchPet);
 
   if (results.isLoading) {
