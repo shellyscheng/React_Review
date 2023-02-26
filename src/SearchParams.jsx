@@ -3,7 +3,7 @@ import { useSearchQuery } from "./petApiService";
 import { useSelector, useDispatch } from "react-redux";
 import useBreedList from "./useBreedList";
 import { all } from "./searchParamsSlice";
-import Results from "./Result";
+import Results from "./Results";
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
